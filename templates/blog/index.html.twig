@@ -3,18 +3,41 @@
 {% block title %}Hello BlogController!{% endblock %}
 
 {% block body %}
-<style>
-    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
-    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
-</style>
 
-<div class="example-wrapper">
-    <h1>Salut {{ controller_name }}! ✅</h1>
+<section class="article">
 
-    This friendly message is coming from:
-    <ul>
-        <li>Your controller at <code><a href="{{ 'C:/xampp/htdocs/Exos-Revisions/Symfony/demo/src/Controller/BlogController.php'|file_link(0) }}">src/Controller/BlogController.php</a></code></li>
-        <li>Your template at <code><a href="{{ 'C:/xampp/htdocs/Exos-Revisions/Symfony/demo/templates/blog/index.html.twig'|file_link(0) }}">templates/blog/index.html.twig</a></code></li>
-    </ul>
-</div>
+<article>
+    <h2>Titre de l'article</h2>
+    <div class="metadate">Ecrit le 10/05/2018 à 19:00 dans la catégorie Politique</div>
+    <div class="content">
+        <img src="http://placehold.it/350x150" alt="">
+        <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Voluptates omnis temporibus adipisci voluptatem enim. Rerum.</p>
+        <p>Laboriosam asperiores nesciunt quibusdam nam, accusamus voluptatum. Accusamus aliquam earum qui velit, in totam at.</p>
+        <a href="{{ path('blog_show') }}" class="btn btn-primary">Lire la suite</a> {# path prend 2 paramètre : 1 paramètre obligatoire (ça era le nom de la route que je veut qui apparaisse et 1 optionnel #}
+    </div>
+</article>
+<article>
+    <h2>Titre de l'article</h2>
+    <div class="metadate">Ecrit le 10/05/2018 à 19:00 dans la catégorie Politique</div>
+    <div class="content">
+        <img src="http://placehold.it/350x150" alt="">
+        <p>Esse, facilis rerum! Facere qui veniam enim reiciendis consectetur laboriosam pariatur voluptatum et, omnis mollitia.</p>
+        <p>Quaerat fugiat illum vero eligendi totam laboriosam quasi, animi aspernatur temporibus vel fugit. Autem, excepturi.</p>
+        <a href="{{ path('blog_show') }}" class="btn btn-primary">Lire la suite</a>
+    </div>
+</article>
+<article>
+    <h2>Titre de l'article</h2>
+    <div class="metadate">Ecrit le 10/05/2018 à 19:00 dans la catégorie Politique</div>
+    <div class="content">
+        <img src="http://placehold.it/350x150" alt="">
+        <p>Perferendis tempora earum iste hic, animi sint. Maiores repellat excepturi aliquid quod expedita neque earum?</p>
+        <p>Vero, ad! Excepturi cupiditate ipsa mollitia eveniet molestias veniam eaque accusantium officia facilis, modi eius.</p>
+        <a href="{{ path('blog_show') }}" class="btn btn-primary">Lire la suite</a>
+    </div>
+</article>
+{# SERVICE : PLACEHOLD.IT <=> Permet de choper des images de toute taille... #}
+
+</section>
+
 {% endblock %}
