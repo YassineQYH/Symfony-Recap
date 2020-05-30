@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
+use App\Entity\Article ;
 
 class BlogController extends AbstractController
 {
@@ -12,8 +13,17 @@ class BlogController extends AbstractController
      */
     public function index()
     {
+        $repo = $this->getDoctrine()->getRepository(Article::class); // Je crée une variable $repo dans ma function index() et je lui dit que je veux discuter avec Doctrine et je veux que tu me donne un Repository, celui qui gère l’entité Article.
+        // Attention, si j’utilise la classe Article, je vais devoir expliqué à PHP où elle se trouve en utilisant le use et je sais qu’elle est dans App\Entity\Article ;
+
+        // $article = $repo->find(12) ; // à ce moment la il irait me trouver l’article n°12 et il me le filerait dans Article.
+        // $article = $repo->findOneByTitle("Titre de l'article"); // Ça irait chercher un article dont le titre serait celui-ci ("Titre de l'article");
+        // $articles = $repo->findByTitle("Titre de l'article"); // Et donc je vais trouver tout les articles qui ont ce titre.
+        $articles = $repo->findAll(); // Pour trouver tout mes articles 
+
         return $this->render('blog/index.html.twig', [
             'controller_name' => 'BlogController',
+            'articles' => $articles
         ]);
     }
 
