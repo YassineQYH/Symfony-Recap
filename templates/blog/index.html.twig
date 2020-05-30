@@ -15,7 +15,7 @@
             {{ article.content | raw }} {# avec article.content => Au lieu d'être un véritable paragraphe il écrit la balise <p> car par défaut, twig essaye de nous sécuriser. Si par exemple quelqu'un nous à mis un script avec un script malicieux dedans, au lieu d'éxecuter ce script, de le laisser s'interpreter il préfère nous afficher les balises tel quel. 
             // raw => brut => Ce filtre permet de nous afficher le contenu telle quelle sinon il va nous afficher les balise <p> xxx </p> #}
 
-            <a href="{{ path('blog_show') }}" class="btn btn-primary">Lire la suite</a> {# path prend 2 paramètre : 1 paramètre obligatoire (ça era le nom de la route que je veut qui apparaisse et 1 optionnel #}
+            <a href="{{ path('blog_show', {'id': article.id}) }}" class="btn btn-primary">Lire la suite</a> {# path prend 2 paramètre : 1 paramètre obligatoire (ça era le nom de la route que je veut qui apparaisse et 1 optionnel #}
         </div>
     </article>
 {% endfor %}
