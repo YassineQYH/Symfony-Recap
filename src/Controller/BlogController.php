@@ -4,8 +4,9 @@ namespace App\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
-Use Symfony\Compenent\HttpFoundation\Request ;
-Use Doctrine\Common\Persistence\ObjectManager;
+Use Symfony\Component\HttpFoundation\Request ;
+/* Use Doctrine\Persistence\ObjectManager; */
+use Doctrine\ORM\EntityManagerInterface; // A la place de ObjectManager car ne fonctionnait pas.
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
@@ -57,9 +58,11 @@ class BlogController extends AbstractController
     /**
      * @Route("/blog/new", name="blog_create")
      */
-    public function create(/* Request $request, objectManager $manager */)
+    public function create(Request $request, EntityManagerInterface $manager) // J'ai remaplcer objectManager par EntityManagerInterface et pareil pour le use
     {
         $article = new Article(); // C'est un article vide prêt à être rempli. Maintenant je veux créer un formulaire, je vais utiliser la méthod createFormBuilder et je dois lui passer une entité qui m'interesse.
+
+        
 
         $form = $this->createFormBuilder($article) // ça va me créer un form qui est lié à mon article. Cependant, il n'est pas configuré, il ne réprésente donc rien. Je dois lui donner maintenant les champs que je veux traiter dans ce formulaire. Je vais donc utiliser la fonction add() qui permet d'ajouter des champs à ce formulaire.
 
@@ -75,7 +78,17 @@ class BlogController extends AbstractController
             // Une fois que j'ai fini de configurer mon formulaire, j'ai envie d'avoir le résultat final qui est la fonction getForm()
             ->getForm(); // Donc on demande à créer un formBuilder, on le configure et à la fin on lui dit, ok, maintenant file moi le form que je t'ai demandé de construire.
 
-            // La 1ere chose que je veux faire, c'est afficher ce formulaire. Donc je veux passer ce formulaire à twig. Je vais donc lui passer une variable qui soit relativement facile à afficher.
+            $form->handleRequest($request); // => Formulaire, essaye d'analyser la requête http que je te passe ici en paramètre.
+            // La 1ere chose que je veux faire, c'est afficher ce formulaire. Donc je veux passer ce formulaire à twig. Je vais donc lui passer une variable qui soit relativement facile à afficher. | Il va analyser, il va voir si ça été soumis ou pas et si ça été soumis, tout les champs qu'on attendait à trouver s'y trouve, est-ce que tout va bien?
+
+            // dump($article);
+                if($form->isSubmitted() && $form->isValid()) {  // C'est une méthode de la classe form qui me permet de savoir si on est en train d'arriver sur la page et rien n'a été soumis on affiche juste le formulaire ou est-ce qu'on est à la 2eme page, quand la personne à rempli le formulaire et cliquer sur enregistrer. | Et surtout, est-ce que le form est valide ? Car des fois on peut soumettre dans un champ email un numéro de téléphone, et ce ne sera donc pas valide.
+                    $article->setCreatedAt(new \DateTime());// La seul chose qu'il me reste à rajouter à l'article c'est la date de création. L'id il l'aura au moment où il sera créé.
+                    $manager->persist($article); // Je peux maintenant demander au manager de faire persister l'article
+                    $manager->flush(); // Quand tout est ok je peux demander au manager d'envoyer la requête.
+
+                    return $this->redirectToRoute('blog_show', ['id' => $article->getId()]); // Si c'est valide et qu'on a tout enregistrer redirige moi vers la page de l'article.
+                } 
 
         // Je passe donc à twig, un tableau qui contiendra les différentes informations que j'ai envie de lui passer et je vais lui passer par exemple une variable qui s'appelle form et qui ne contient pas $form (car c'est un objet qui est complexe et qui a beaucoup de méthode, beaucoup de chose, ce n'est pas ce que twig veut avoir entre les mains). Il veut avoir le résultat de la fonction createView() de ce formulaire. Car cette grosse classe avec toutes ces méthodes possède notamment une méthode createView() qui va créer un petit objet qui représente pour le coup, plus l'aspect affichage de notre formulaire et c'est ça qu'on va passer à twig.
         return $this->render('blog/create.html.twig', 
