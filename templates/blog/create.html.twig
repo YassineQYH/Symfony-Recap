@@ -10,6 +10,8 @@
 
     {{ form_widget(formArticle)}}
 
+    <button type="submit" class="btn btn-success">Ajouter l'article</button>
+
     {{ form_end(formArticle)}}  {# TWIG : FONCTION form()  <=> Permet d’afficher un formulaire Symfony | Dans cette fonction je peux passer un formulaire, je passe donc ma variable formArticle #} 
     {# form_end => J'arrête le formulaire #} {# Il va essayer d'afficher les 3 champs même si je n'ai fait qu'un form-group avec le titre uniquement. A partir du form_end si on a pas afficher nos champs comme on le souhaite, lui il va dire : tout les champs qui n'ont pas été affiché, je vais les afficher. #}
 

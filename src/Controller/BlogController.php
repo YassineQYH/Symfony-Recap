@@ -82,10 +82,10 @@ class BlogController extends AbstractController
                     'placeholder' => "Image de l'article"
                 ]
             ])
-            ->add('save', SubmitType::class,
+            /* ->add('save', SubmitType::class,
             [
                 'label' => 'Enregistrer'
-            ])
+            ]) */
             // Une fois que j'ai fini de configurer mon formulaire, j'ai envie d'avoir le résultat final qui est la fonction getForm()
             ->getForm(); // Donc on demande à créer un formBuilder, on le configure et à la fin on lui dit, ok, maintenant file moi le form que je t'ai demandé de construire.
 
