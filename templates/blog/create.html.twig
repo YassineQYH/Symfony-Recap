@@ -4,7 +4,13 @@
 
 {% block body %} {# Ce template étend le block body #}
 
-    <h1>Création d'un article !</h1>
+    <h1>
+        {% if editMode %}
+            Modification d'un article !
+        {% else %}
+            Création d'un article !
+        {% endif %}
+    </h1>
 
     {{ form_start(formArticle)}} {# form_start => c'est une fonction de twig qui va nous afficher la balise ouvrante du formulaire avec la bonne méthode, la bonne action et certaines données essentiel au fonctionnement du formulaire. #}
 
@@ -12,7 +18,13 @@
     {{ form_row(formArticle.content, {'attr': {'placeholder': "Contenu de l'article"}} ) }}
     {{ form_row(formArticle.image, {'attr': {'placeholder': "Url de l'image de l'article"}} ) }}
 
-    <button type="submit" class="btn btn-success">Ajouter l'article</button>
+    <button type="submit" class="btn btn-success">
+        {% if editMode %}
+            Enregistrer
+        {% else %}
+            Ajouter l'article
+        {% endif %}
+    </button>
 
     {{ form_end(formArticle)}}  {# TWIG : FONCTION form()  <=> Permet d’afficher un formulaire Symfony | Dans cette fonction je peux passer un formulaire, je passe donc ma variable formArticle #} 
     {# form_end => J'arrête le formulaire #} {# Il va essayer d'afficher les 3 champs même si je n'ai fait qu'un form-group avec le titre uniquement. A partir du form_end si on a pas afficher nos champs comme on le souhaite, lui il va dire : tout les champs qui n'ont pas été affiché, je vais les afficher. #}

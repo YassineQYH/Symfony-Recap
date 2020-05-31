@@ -57,12 +57,19 @@ class BlogController extends AbstractController
 
     /**
      * @Route("/blog/new", name="blog_create")
+     * @Route("/blog/{id}/edit", name="blog_edit")
      */
-    public function create(Request $request, EntityManagerInterface $manager) // J'ai remaplcer objectManager par EntityManagerInterface et pareil pour le use
-    {
-        $article = new Article(); // C'est un article vide prêt à être rempli. Maintenant je veux créer un formulaire, je vais utiliser la méthod createFormBuilder et je dois lui passer une entité qui m'interesse.
+    public function form(Article $article = null, Request $request, EntityManagerInterface $manager) // J'ai remaplcer objectManager par EntityManagerInterface et pareil pour le use
+     {
+        // $article = new Article(); // C'est un article vide prêt à être rempli. Maintenant je veux créer un formulaire, je vais utiliser la méthod createFormBuilder et je dois lui passer une entité qui m'interesse.
 
-        
+        /* $article->setTitle("Titre d'exemple")
+                ->setContent("Le contenu de l'article"); */
+
+        if(!$article)
+        {
+            $article = new Article();
+        }
 
         $form = $this->createFormBuilder($article) // ça va me créer un form qui est lié à mon article. Cependant, il n'est pas configuré, il ne réprésente donc rien. Je dois lui donner maintenant les champs que je veux traiter dans ce formulaire. Je vais donc utiliser la fonction add() qui permet d'ajouter des champs à ce formulaire.
 
@@ -83,7 +90,12 @@ class BlogController extends AbstractController
 
             // dump($article);
                 if($form->isSubmitted() && $form->isValid()) {  // C'est une méthode de la classe form qui me permet de savoir si on est en train d'arriver sur la page et rien n'a été soumis on affiche juste le formulaire ou est-ce qu'on est à la 2eme page, quand la personne à rempli le formulaire et cliquer sur enregistrer. | Et surtout, est-ce que le form est valide ? Car des fois on peut soumettre dans un champ email un numéro de téléphone, et ce ne sera donc pas valide.
-                    $article->setCreatedAt(new \DateTime());// La seul chose qu'il me reste à rajouter à l'article c'est la date de création. L'id il l'aura au moment où il sera créé.
+                    
+                    if(!$article->getId())
+                    {
+                        $article->setCreatedAt(new \DateTime());// La seul chose qu'il me reste à rajouter à l'article c'est la date de création. L'id il l'aura au moment où il sera créé.
+                    }     
+                    
                     $manager->persist($article); // Je peux maintenant demander au manager de faire persister l'article
                     $manager->flush(); // Quand tout est ok je peux demander au manager d'envoyer la requête.
 
@@ -94,7 +106,8 @@ class BlogController extends AbstractController
         return $this->render('blog/create.html.twig', 
     [
         // Pour éviter toute confusion, je donne le nom formArticle à mon formulaire.
-        'formArticle' => $form->createView()   // Ce que je peux faire désormais c'est faire afficher ce formulaire à twig / dans create.html.twig
+        'formArticle' => $form->createView(),   // Ce que je peux faire désormais c'est faire afficher ce formulaire à twig / dans create.html.twig
+        'editMode' => $article->getId() !== null
     ]);
     }
 
