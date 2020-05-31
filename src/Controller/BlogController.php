@@ -12,6 +12,7 @@ use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use App\Entity\Article;
 use App\Repository\ArticleRepository;
+use App\Form\ArticleType;
 
 class BlogController extends AbstractController
 {
@@ -71,19 +72,21 @@ class BlogController extends AbstractController
             $article = new Article();
         }
 
-        $form = $this->createFormBuilder($article) // ça va me créer un form qui est lié à mon article. Cependant, il n'est pas configuré, il ne réprésente donc rien. Je dois lui donner maintenant les champs que je veux traiter dans ce formulaire. Je vais donc utiliser la fonction add() qui permet d'ajouter des champs à ce formulaire.
+        /* $form = $this->createFormBuilder($article) */ // ça va me créer un form qui est lié à mon article. Cependant, il n'est pas configuré, il ne réprésente donc rien. Je dois lui donner maintenant les champs que je veux traiter dans ce formulaire. Je vais donc utiliser la fonction add() qui permet d'ajouter des champs à ce formulaire.
 
-            ->add('title') // Dans la plupart des cas, on fait confiance à Symfony mais on peut toujours si on le souhaite, le configurer à notre guise.
+            /* ->add('title') */ // Dans la plupart des cas, on fait confiance à Symfony mais on peut toujours si on le souhaite, le configurer à notre guise.
              // attr => On peut encore donner un dernier paramètre à cette fonction add pour encore plus configurer notre champ. Et ce dernier paramètre représente les options de notre champ. | les options des attributs. j’ai peut-être envie de donner une classe css / un identifiant / placeholder / etc 
                 
-            ->add('content') // Ne pas oublier le use pour le TextType & TextareaType pour expliquer à PHP d'où vient le textType
-            ->add('image')
+            /* ->add('content') */ // Ne pas oublier le use pour le TextType & TextareaType pour expliquer à PHP d'où vient le textType
+            /* ->add('image') */
             /* ->add('save', SubmitType::class,
             [
                 'label' => 'Enregistrer'
             ]) */
             // Une fois que j'ai fini de configurer mon formulaire, j'ai envie d'avoir le résultat final qui est la fonction getForm()
-            ->getForm(); // Donc on demande à créer un formBuilder, on le configure et à la fin on lui dit, ok, maintenant file moi le form que je t'ai demandé de construire.
+            /* ->getForm(); */ // Donc on demande à créer un formBuilder, on le configure et à la fin on lui dit, ok, maintenant file moi le form que je t'ai demandé de construire.
+
+            $form = $this->createForm(ArticleType::class, $article); // Ne pas oublier le use App\Form\ArticleType;
 
             $form->handleRequest($request); // => Formulaire, essaye d'analyser la requête http que je te passe ici en paramètre.
             // La 1ere chose que je veux faire, c'est afficher ce formulaire. Donc je veux passer ce formulaire à twig. Je vais donc lui passer une variable qui soit relativement facile à afficher. | Il va analyser, il va voir si ça été soumis ou pas et si ça été soumis, tout les champs qu'on attendait à trouver s'y trouve, est-ce que tout va bien?
