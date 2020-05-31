@@ -1,0 +1,9 @@
+{% extends 'base.html.twig' %} {# Ce template doit faire parti de mon template de base donc il doit hériter de base.html.twig / Il hérite donc de la nav des styles css etc #}
+
+{% block body %} {# Ce template étend le block body #}
+
+    <h1>Création d'un article !</h1>
+
+    {{ form(formArticle)}}  {# TWIG : FONCTION form()  <=> Permet d’afficher un formulaire Symfony | Dans cette fonction je peux passer un formulaire, je passe donc ma variable formArticle #}
+
+{% endblock %}

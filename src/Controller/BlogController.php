@@ -4,6 +4,10 @@ namespace App\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
+Use Symfony\Compenent\HttpFoundation\Request ;
+Use Doctrine\Common\Persistence\ObjectManager;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use App\Entity\Article;
 use App\Repository\ArticleRepository;
 
@@ -48,6 +52,47 @@ class BlogController extends AbstractController
         ]); 
     }   
 
+
+    /**
+     * @Route("/blog/new", name="blog_create")
+     */
+    public function create(/* Request $request, objectManager $manager */)
+    {
+        $article = new Article(); // C'est un article vide prêt à être rempli. Maintenant je veux créer un formulaire, je vais utiliser la méthod createFormBuilder et je dois lui passer une entité qui m'interesse.
+
+        $form = $this->createFormBuilder($article) // ça va me créer un form qui est lié à mon article. Cependant, il n'est pas configuré, il ne réprésente donc rien. Je dois lui donner maintenant les champs que je veux traiter dans ce formulaire. Je vais donc utiliser la fonction add() qui permet d'ajouter des champs à ce formulaire.
+
+            ->add('title', TextType::class, // Dans la plupart des cas, on fait confiance à Symfony mais on peut toujours si on le souhaite, le configurer à notre guise.
+            [
+                'attr' => [ // attr => On peut encore donner un dernier paramètre à cette fonction add pour encore plus configurer notre champ. Et ce dernier paramètre représente les options de notre champ. | les options des attributs. j’ai peut-être envie de donner une classe css / un identifiant / placeholder / etc 
+                    'placeholder' => "Titre de l'article"
+                ]
+            ]) 
+            ->add('content', TextareaType::class, // Ne pas oublier le use pour le TextType & TextareaType pour expliquer à PHP d'où vient le textType
+            [
+                'attr' => [
+                    'placeholder' => "Contenu de l'article"
+                ]
+            ])  
+            ->add('image', TextType::class,
+            [
+                'attr' =>
+                [
+                    'placeholder' => "Image de l'article"
+                ]
+            ])
+            // Une fois que j'ai fini de configurer mon formulaire, j'ai envie d'avoir le résultat final qui est la fonction getForm()
+            ->getForm(); // Donc on demande à créer un formBuilder, on le configure et à la fin on lui dit, ok, maintenant file moi le form que je t'ai demandé de construire.
+
+            // La 1ere chose que je veux faire, c'est afficher ce formulaire. Donc je veux passer ce formulaire à twig. Je vais donc lui passer une variable qui soit relativement facile à afficher.
+
+        // Je passe donc à twig, un tableau qui contiendra les différentes informations que j'ai envie de lui passer et je vais lui passer par exemple une variable qui s'appelle form et qui ne contient pas $form (car c'est un objet qui est complexe et qui a beaucoup de méthode, beaucoup de chose, ce n'est pas ce que twig veut avoir entre les mains). Il veut avoir le résultat de la fonction createView() de ce formulaire. Car cette grosse classe avec toutes ces méthodes possède notamment une méthode createView() qui va créer un petit objet qui représente pour le coup, plus l'aspect affichage de notre formulaire et c'est ça qu'on va passer à twig.
+        return $this->render('blog/create.html.twig', 
+    [
+        // Pour éviter toute confusion, je donne le nom formArticle à mon formulaire.
+        'formArticle' => $form->createView()   // Ce que je peux faire désormais c'est faire afficher ce formulaire à twig / dans create.html.twig
+    ]);
+    }
 
 
     // ROUTES PARAMETREES <=> Intégrer des paramètres variables dans une route.
