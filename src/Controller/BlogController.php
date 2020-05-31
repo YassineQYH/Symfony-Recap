@@ -8,6 +8,7 @@ Use Symfony\Compenent\HttpFoundation\Request ;
 Use Doctrine\Common\Persistence\ObjectManager;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use App\Entity\Article;
 use App\Repository\ArticleRepository;
 
@@ -65,24 +66,25 @@ class BlogController extends AbstractController
             ->add('title', TextType::class, // Dans la plupart des cas, on fait confiance à Symfony mais on peut toujours si on le souhaite, le configurer à notre guise.
             [
                 'attr' => [ // attr => On peut encore donner un dernier paramètre à cette fonction add pour encore plus configurer notre champ. Et ce dernier paramètre représente les options de notre champ. | les options des attributs. j’ai peut-être envie de donner une classe css / un identifiant / placeholder / etc 
-                    'placeholder' => "Titre de l'article",
-                    'class' => 'form-control'
+                    'placeholder' => "Titre de l'article"
                 ]
             ]) 
             ->add('content', TextareaType::class, // Ne pas oublier le use pour le TextType & TextareaType pour expliquer à PHP d'où vient le textType
             [
                 'attr' => [
-                    'placeholder' => "Contenu de l'article",
-                    'class' => 'form-control'
+                    'placeholder' => "Contenu de l'article"
                 ]
             ])  
             ->add('image', TextType::class,
             [
                 'attr' =>
                 [
-                    'placeholder' => "Image de l'article",
-                    'class' => 'form-control'
+                    'placeholder' => "Image de l'article"
                 ]
+            ])
+            ->add('save', SubmitType::class,
+            [
+                'label' => 'Enregistrer'
             ])
             // Une fois que j'ai fini de configurer mon formulaire, j'ai envie d'avoir le résultat final qui est la fonction getForm()
             ->getForm(); // Donc on demande à créer un formBuilder, on le configure et à la fin on lui dit, ok, maintenant file moi le form que je t'ai demandé de construire.
