@@ -63,25 +63,11 @@ class BlogController extends AbstractController
 
         $form = $this->createFormBuilder($article) // ça va me créer un form qui est lié à mon article. Cependant, il n'est pas configuré, il ne réprésente donc rien. Je dois lui donner maintenant les champs que je veux traiter dans ce formulaire. Je vais donc utiliser la fonction add() qui permet d'ajouter des champs à ce formulaire.
 
-            ->add('title', TextType::class, // Dans la plupart des cas, on fait confiance à Symfony mais on peut toujours si on le souhaite, le configurer à notre guise.
-            [
-                'attr' => [ // attr => On peut encore donner un dernier paramètre à cette fonction add pour encore plus configurer notre champ. Et ce dernier paramètre représente les options de notre champ. | les options des attributs. j’ai peut-être envie de donner une classe css / un identifiant / placeholder / etc 
-                    'placeholder' => "Titre de l'article"
-                ]
-            ]) 
-            ->add('content', TextareaType::class, // Ne pas oublier le use pour le TextType & TextareaType pour expliquer à PHP d'où vient le textType
-            [
-                'attr' => [
-                    'placeholder' => "Contenu de l'article"
-                ]
-            ])  
-            ->add('image', TextType::class,
-            [
-                'attr' =>
-                [
-                    'placeholder' => "Image de l'article"
-                ]
-            ])
+            ->add('title') // Dans la plupart des cas, on fait confiance à Symfony mais on peut toujours si on le souhaite, le configurer à notre guise.
+             // attr => On peut encore donner un dernier paramètre à cette fonction add pour encore plus configurer notre champ. Et ce dernier paramètre représente les options de notre champ. | les options des attributs. j’ai peut-être envie de donner une classe css / un identifiant / placeholder / etc 
+                
+            ->add('content') // Ne pas oublier le use pour le TextType & TextareaType pour expliquer à PHP d'où vient le textType
+            ->add('image')
             /* ->add('save', SubmitType::class,
             [
                 'label' => 'Enregistrer'
