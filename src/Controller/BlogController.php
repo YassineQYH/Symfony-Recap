@@ -65,20 +65,23 @@ class BlogController extends AbstractController
             ->add('title', TextType::class, // Dans la plupart des cas, on fait confiance à Symfony mais on peut toujours si on le souhaite, le configurer à notre guise.
             [
                 'attr' => [ // attr => On peut encore donner un dernier paramètre à cette fonction add pour encore plus configurer notre champ. Et ce dernier paramètre représente les options de notre champ. | les options des attributs. j’ai peut-être envie de donner une classe css / un identifiant / placeholder / etc 
-                    'placeholder' => "Titre de l'article"
+                    'placeholder' => "Titre de l'article",
+                    'class' => 'form-control'
                 ]
             ]) 
             ->add('content', TextareaType::class, // Ne pas oublier le use pour le TextType & TextareaType pour expliquer à PHP d'où vient le textType
             [
                 'attr' => [
-                    'placeholder' => "Contenu de l'article"
+                    'placeholder' => "Contenu de l'article",
+                    'class' => 'form-control'
                 ]
             ])  
             ->add('image', TextType::class,
             [
                 'attr' =>
                 [
-                    'placeholder' => "Image de l'article"
+                    'placeholder' => "Image de l'article",
+                    'class' => 'form-control'
                 ]
             ])
             // Une fois que j'ai fini de configurer mon formulaire, j'ai envie d'avoir le résultat final qui est la fonction getForm()
