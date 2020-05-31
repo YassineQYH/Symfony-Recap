@@ -3,20 +3,30 @@
  
 Je vous partage mon Repo sur une intro de Symfony qui parle de :
 
-Créer une appli Symfony sur Windows 
-Installer un serveur personnaliser pour lancer l'appli
-Les annotations
-Création des routes
-Langage Twig
-Boostswatch => Des thème bootstrap
-L'ORM Doctrine et les bases de données
-Les migrations dans Symfony
-Les Fixtures
-Création d'une BDD
-Créer une Fixture
-Utiliser Doctrine : Accéder aux données dans Symfony
-Route paramétrées
-Introduction à l'injection de dépendances dans Symfony
+-Créer une appli Symfony sur Windows 
+-Installer un serveur personnaliser pour lancer l'appli
+-Les annotations
+-Création des routes
+-Langage Twig
+-Boostswatch => Des thème bootstrap
+-L'ORM Doctrine et les bases de données
+-Les migrations dans Symfony
+-Les Fixtures
+-Création d'une BDD
+-Créer une Fixture
+-Utiliser Doctrine : Accéder aux données dans Symfony
+-Route paramétrées
+-Introduction à l'injection de dépendances dans Symfony
+
+!! création des formulaires en Symfony !!
+-Créer une page
+-Création du Formulaire (Approche Symfony)
+-Bouton pour soumettre
+-Séparation du code
+-Traiter le formulaire
+-New + Update
+-Mise à jour d'un formulaire
+-La validation ! Sur nos entités
 
 https://github.com/O-clock-Excalibur/demo-Symfony
 
