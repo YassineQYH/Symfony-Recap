@@ -34,7 +34,7 @@ class Category
      */
     private $articles;
 
-    public function __construct()   // On voit que dés qu'il construit une catégorie il dit que : la propriété articles c'est un type : ArrayCollection => C'est une surcouche des tableau classic en PHP qui leur rajoute pleins de méthode ultra sympas à utiliser, on se croirait presque en js.
+    public function __construct()   // On voit que dés qu'il construit une catégorie il dit que : la propriété articles c'est un type : ArrayCollection => C'est une surcouche des tableau classic en PHP qui leur rajoute pleins de méthode ultra sympas à utiliser, on se croirait presque en js. C'est un tableau ++
     {
         $this->articles = new ArrayCollection();
     }
