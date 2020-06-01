@@ -9,7 +9,7 @@ use App\Entity\Category;
 use App\Entity\Comment;
 
 use Faker;
-use Fake\Factory;
+/* use Fake\Factory; */
 
 class ArticleFixtures extends Fixture
 {
