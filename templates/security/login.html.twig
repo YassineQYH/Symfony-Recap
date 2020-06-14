@@ -1,5 +1,23 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-<h1>Connexion !</h1>
+    <h1>Connexion !</h1>
+
+    <form action="">
+        
+            <div class="form-group">
+                <input placeholder="Adresse email ..." required name="_username" type="text" class="form-control"> <!-- _username => Peut importe que nous on utilise pas le username pour se connecter, on utilise l'adresse mail. Ici, on doit utiliser : _username, on peut changer ce nom de champ mais Symfony s'atten à recevoir un truc qui s'appel _username donc on peut le changer pour qu'il s'attende à autre chose mais là pour l'instant on va rester comme ça. -->
+                <!-- _username et _password  Noms des champs pris en compte pour la connexion par Symfony. -->
+            </div>
+
+            <div class="form-group">
+                <input placeholder="Mot de passe ..." required name="_password" type="password" class="form-control"> 
+            </div>
+
+            <div class="form-group">
+                <button type="submit" class="btn btn-success">Connexion !</button>
+            </div>
+
+    </form>
+
 {% endblock %}

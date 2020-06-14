@@ -5,13 +5,22 @@ security:
     # https://symfony.com/doc/current/security.html#where-do-users-come-from-user-providers
     providers:
         users_in_memory: { memory: null }
-    firewalls:
+        in_database:    # Mettre le nom du provider que je veux et ensuite je vais pouvoir expliquer ce qu'est ce provider. Je l'appel in_database pour dire que dans mon application j'ai aussi un provider qui existe et qui s'appel in_database.
+            entity:     # J'explique que c'est une provider qui se base sur une entité, sur quelque chose qui se trouve dans la base.
+                class: App\Entity\User  # Je dis ici quel est la classe.
+                property: email     # Expliquer quel est la propriété qui va nous permettre d'aller rechercher l'utilisateur en question. | La propriété par laquel on va aller rechercher des utilisateurs sera donc email
+    firewalls:  
         dev:
             pattern: ^/(_(profiler|wdt)|css|images|js)/
             security: false
         main:
-            anonymous: lazy
-            provider: users_in_memory
+            anonymous: true
+            # provider: users_in_memory
+            provider: in_database
+
+            form_login:     # Option Form_login  Permet de préciser qu’on utilisera un formulaire de login !
+                login_path: security_login  # Il est où se formulaire de login ? Je lui donne le nom de la route, celle que je veux. Ici, celle où il y a le formulaire de connexion.
+                check_path: security_login  # C'est l'endroit que je dois appeler pour vérifier les informations d'un formulaire de login. C'est le même nom de route. Symfony va appeler la même route que ce soit pour afficher le formulaire ou que ce soit pour vérifier les infos du formulaire.
 
             # activate different ways to authenticate
             # https://symfony.com/doc/current/security.html#firewalls-authentication
