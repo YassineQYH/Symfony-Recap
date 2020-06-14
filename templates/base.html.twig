@@ -25,6 +25,18 @@
                     <a class="nav-link" href="{{ path('blog_create') }}">Créer un article</a> {# TWIG : Fonction path() <=> Elle permet de retrouver l’URL en fonction du nom d’une Route. #}
                 </li>
 
+                <!-- S'il n'y a rien dans app.user, alors je veux afficher le lien de connexion -->
+                {% if not app.user %}   <!-- Dans twig, on a une grosse variable d’environnement qui s’appel : app => C’est une énorme variable global avec pleins d’informations dedans. A l'intérieur de app, on a un petit objet qui s'appel user   --> 
+                    <li class="nav-item">
+                        <a href="{{ path('security_login') }}" class="nav-link">Connexion</a>    
+                    </li>
+
+                <!-- Sinon, j'affiche le lien de déconnexion. -->
+                {% else %}
+                    <li class="nav-item">
+                        <a href="{{ path('security_logout') }}" class="nav-link">Déconnexion</a>    
+                    </li>
+                {% endif %}
             </ul>
         </div>
     </nav>
