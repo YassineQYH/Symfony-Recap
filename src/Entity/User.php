@@ -2,13 +2,18 @@
 
 namespace App\Entity;
 
-use App\Repository\UserRepository;
 use Doctrine\ORM\Mapping as ORM;
+use App\Repository\UserRepository;
 use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 Use Symfony\Component\Validator\Constraints as Assert;
 
 /**
- * @ORM\Entity(repositoryClass=UserRepository::class)
+ * @ORM\Entity(repositoryClass="App\Repository\UserRepository")
+ * @UniqueEntity(       
+ *  fields={"email"},
+ *  message="L'email que vous avez indiqué est déjà utilisé !"  
+ * ) 
  */
 class User implements UserInterface // UserInterface <=> L’interface qu’on doit implémenter si on veut créer des users
 {
@@ -21,6 +26,7 @@ class User implements UserInterface // UserInterface <=> L’interface qu’on d
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Assert\Email() 
      */
     private $email;
 
@@ -87,7 +93,7 @@ class User implements UserInterface // UserInterface <=> L’interface qu’on d
     public function getSalt(){}  // Ne fera rien aussi pour l'instant vu qu'on a rien de spécial.
 
     public function getRoles(){   // Doit renvoyer un tableau de chaine de caractère qui explique quel est le rôle de cet utilisateur. Pour l'instant vu qu'on a pas encore fait de gestion de rôles on va simplement dire que c'est un tableau qui va contenir un utilisateur classic. Il n'y a pas encore d'administration etc donc c'est juste un role_user. A terme ici, quand on aura plusieurs rôles il faudra ici que getRoles envoie les rôles qui sont au sein de cet utilisateur, qui sont donné à cet utilisateur.
-        
+
     return ['ROLE_USER'];
     }
 

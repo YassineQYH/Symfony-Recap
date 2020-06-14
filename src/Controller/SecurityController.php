@@ -44,6 +44,8 @@ class SecurityController extends AbstractController
             // Alors je veux que tu fasse persister dans le temps le $user dans la BDD.
             $manager->persist($user);
             $manager->flush();
+
+            return $this->redirectToRoute('security_login');
         }
 
         // Je veux afficher ce fichier là et je lui passe des variable qu'il puisse utiliser 
@@ -52,5 +54,14 @@ class SecurityController extends AbstractController
             // Je demande à mon formulaire de créer la vue.
             'form' => $form->createView()
         ]);
+    }
+
+
+    /**
+     * @Route("/connexion", name="security_login")
+     */
+    public function login()
+    {
+        return $this->render('security/login.html.twig');
     }
 }
