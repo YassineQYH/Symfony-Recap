@@ -3,8 +3,8 @@
 {% block body %}
     <h1>Connexion !</h1>
 
-    <form action="">
-        
+    <form action="{{ path('security_login') }}" method="post"> <!-- security_login car c'est le chemin que j'avait défini pour la vérification du login. -->
+
             <div class="form-group">
                 <input placeholder="Adresse email ..." required name="_username" type="text" class="form-control"> <!-- _username => Peut importe que nous on utilise pas le username pour se connecter, on utilise l'adresse mail. Ici, on doit utiliser : _username, on peut changer ce nom de champ mais Symfony s'atten à recevoir un truc qui s'appel _username donc on peut le changer pour qu'il s'attende à autre chose mais là pour l'instant on va rester comme ça. -->
                 <!-- _username et _password  Noms des champs pris en compte pour la connexion par Symfony. -->
