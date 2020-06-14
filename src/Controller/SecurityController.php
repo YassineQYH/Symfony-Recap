@@ -64,4 +64,11 @@ class SecurityController extends AbstractController
     {
         return $this->render('security/login.html.twig');
     }
+
+
+    /**
+     * @Route("/deconnexion", name="security_logout")
+     */
+    public function logout(){}  // Ne fera rien. Pourquoi ça va fonctionner s'il ne fait rien ? Car c'est un composant de sécurité qui va s'en charger. Le tout c'est d'avoir une route qui ai un nom qui existe.
+    
 }

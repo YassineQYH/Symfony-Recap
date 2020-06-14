@@ -22,6 +22,10 @@ security:
                 login_path: security_login  # Il est où se formulaire de login ? Je lui donne le nom de la route, celle que je veux. Ici, celle où il y a le formulaire de connexion.
                 check_path: security_login  # C'est l'endroit que je dois appeler pour vérifier les informations d'un formulaire de login. C'est le même nom de route. Symfony va appeler la même route que ce soit pour afficher le formulaire ou que ce soit pour vérifier les infos du formulaire.
 
+            logout: # Je crée une nouvelle propriété qui s'appel logout et je peux lui donner 2 paramètres.
+                path: security_logout   # Où se trouve le logout
+                target: blog    #   Redirection vers la route blog une fois que je me suis déconnecter.
+
             # activate different ways to authenticate
             # https://symfony.com/doc/current/security.html#firewalls-authentication
 
