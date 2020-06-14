@@ -27,13 +27,17 @@
         </div>
     {% endfor %}
 
-    {{ form_start(commentForm) }}
-    {{ form_row(commentForm.author, {'attr': {'placeholder': "Votre nom"}} ) }}
-    {{ form_row(commentForm.content, {'attr': {'placeholder': "Votre commentaire"}} ) }}
+    {% if app.user %}
+        {{ form_start(commentForm) }}
+        {{ form_row(commentForm.author, {'attr': {'placeholder': "Votre nom"}} ) }}
+        {{ form_row(commentForm.content, {'attr': {'placeholder': "Votre commentaire"}} ) }}
 
-    <button type="submit" class="btn btn-success">Commenter !</button>
-    {{ form_end(commentForm) }}</br>
-
-</section>
+        <button type="submit" class="btn btn-success">Commenter !</button>
+        {{ form_end(commentForm) }}</br>
+    {% else %}
+        <h2>Vous ne pouvez pas commenter si vous n'êtes pas connecter.</h2>
+        <a href="{{path('security_login')}}" class="btn btn-primary">Connexion</a>
+    {% endif %}
+</section></br>
 
 {% endblock %}
