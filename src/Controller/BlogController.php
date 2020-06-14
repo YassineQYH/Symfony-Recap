@@ -2,17 +2,24 @@
 
 namespace App\Controller;
 
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 Use Symfony\Component\HttpFoundation\Request ;
 /* Use Doctrine\Persistence\ObjectManager; */
 use Doctrine\ORM\EntityManagerInterface; // A la place de ObjectManager car ne fonctionnait pas.
+
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
-use App\Entity\Article;
+
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+
 use App\Repository\ArticleRepository;
+use App\Entity\Article;
+use App\Entity\Comment;
 use App\Form\ArticleType;
+use App\Form\CommentType;
+
 
 class BlogController extends AbstractController
 {
@@ -124,8 +131,32 @@ class BlogController extends AbstractController
     // Et là, Symfony comprend que dans une route qui est blog/quelque chose, ce quelque chose, c’est l’identifiant.
     // Pour récupérer cet identifiant, Symfony va le passer à ma fonction show()
 
-    public function show(/* ArticleRepository $repo, $id */ Article $article)
+    public function show(/* ArticleRepository $repo, $id */ Article $article, Request $request, EntityManagerInterface $manager)    // Je veux recevoir la request et j'ai besoin de mon manager
     {
+        // Je passe un commentaire à ce formulaire pour que ce soit relié aux données du commentaire.
+        $comment = new Comment();
+        // je dis que je veux créer un formulaire.
+        $form = $this->createForm(CommentType::class, $comment);
+
+        // Gère la request que je te passe qui s'appel $request 
+        $form->handleRequest($request);
+
+        // Si mon form à été soumis et qu'il est valide 
+        if($form->isSubmitted() && $form->isValid()){
+
+            // Avant de poster le commentaire. J'explique à ce commentaire qu'il vient d'être créé et à quel article il est relié. Pour faire ça, je peux dire :
+            $comment->setCreatedAt(new \DateTime()) // chère comment ta date de création c'est un nouveau DateTime qui sera par défaut à maintenant.
+                    ->setArticle($article); // Et ce que je peux lui dire aussi c'est : tu appartiens à l'article qui est l'article que j'ai ici en variable.
+
+            // Alors je fais appel à mon manager pour dire que je veux sauvegarder mon commentaire.
+            $manager->persist($comment);
+            $manager->flush();
+
+            // Je veux redirigé vers cet article.
+            return $this->redirectToRoute('blog_show', ['id' => $article->getId()]);
+        }
+
+
         // Il me reste à créer un repository en disant
         // $repo = $this->getDoctrine()->getRepository(Article::class); // Je veux parler avec Doctrine, je veux avoir un repository, le quel me demande doctrine donc je lui dit Article::class // Je peux me passer de cette ligne-là tout simplement en demandant la dépendance, je vais demander à Symfony de me passer un repo qui serait un ArticleRepository et là ça marcherait puisqu’ici 
 
@@ -133,7 +164,9 @@ class BlogController extends AbstractController
         // $article = $repo->find($id); // Trouve moi l’article qui à l’identifiant qu’on m’a envoyé dans l’adresse en haut. // Je peux carrément me passer de cette ligne qui crée l’article Et tout simplement demander à Symfony de me passer ici une variable article qui sera de type $Article
 
         return $this->render('blog/show.html.twig', [   // Je dois maintenant passer un tableau à twig avec les variables que je veux qu’il utilise, notamment ici la seul variable qui m’intéresse c’est de dire à twig : tu vas devoir utiliser un article dans ton template et il contiendra les données de mon article. 
-            'article' => $article
+            'article' => $article,
+            // Je peux maintenant faire passer à twig ce formulaire.
+            'commentForm' => $form->createView()
         ]); // Je peux donc maintenant aller dans ma vue qui s’appelle show.html.twig et je sais que maintenant dans tout ce template j’ai accès à une variable qui s’appelle article. Je peux donc dynamiser mon article.
     }
 
