@@ -28,6 +28,12 @@ Je vous partage mon Repo sur une intro de Symfony qui parle de :
 -Mise à jour d'un formulaire
 -La validation ! Sur nos entités
 
+!! Les relations entre entités doctrine !!
+-Les entités : On rajoute des tables : (Category & Comment)
+-Fixtures et faker ! Créer des jeux de fausses données.
+-Afficher avec twig : On affiche les entités liées entre elles !
+-Formulaires ? Manipuler les relations dans les formulaires 
+
 https://github.com/O-clock-Excalibur/demo-Symfony
 
 Tout est expliqué dans le fichier word présent dans le dossier public du projet Symfony 
