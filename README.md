@@ -34,6 +34,15 @@ Je vous partage mon Repo sur une intro de Symfony qui parle de :
 -Afficher avec twig : On affiche les entités liées entre elles !
 -Formulaires ? Manipuler les relations dans les formulaires 
 
+!! Authentification des utilisateurs & Autorisation (rôles) !!
+-Le composant Security de Symfony (Firewalls/Providers/Encoders)
+-L’entité User : On stocke nos users dans la BDD
+-Inscription : Créons le formulaire d’inscription
+-Des users uniques : Faire en sorte que les emails soient uniques
+-Login Form ! On met en place le formulaire de login !
+-Deconnexion ! On met en place un logout !
+-Commentaires : On créé un formulaire de commentaires qu’on ne verra que si on est connecté !
+
 https://github.com/O-clock-Excalibur/demo-Symfony
 
 Tout est expliqué dans le fichier word présent dans le dossier public du projet Symfony 
